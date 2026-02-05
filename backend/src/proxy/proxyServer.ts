@@ -36,6 +36,8 @@ const corsOptions = {
             /stackblitz\.com$/,
             /gitpod\.io$/,
             /replit\.com$/,
+            /qoder\.com$/,
+            /qodo\.ai$/,
         ];
 
         try {
@@ -112,11 +114,40 @@ proxyApp.get("/proxy/info", (req: Request, res: Response) => {
             "VS Code Web",
             "GitHub Codespaces",
             "Local HTML Files",
+            "Qoder Editor",
         ],
         endpoints: {
             health: "/proxy/health",
             info: "/proxy/info",
             backend: "/* (all backend routes)",
+        },
+    });
+});
+
+// Qoder specific configuration endpoint
+proxyApp.get("/proxy/qoder-config", (req: Request, res: Response) => {
+    res.json({
+        openaiCompatible: {
+            baseUrl: `http://localhost:${PROXY_PORT}/v1`,
+            apiKey: "your-api-key-here",
+            modelName: "qwen2.5-coder:0.5b",
+            chatEndpoint: "/chat",
+            modelsEndpoint: "/models",
+        },
+        proxySettings: {
+            httpProxy: `http://localhost:${PROXY_PORT}`,
+            httpsProxy: `http://localhost:${PROXY_PORT}`,
+            noProxy: "localhost,127.0.0.1",
+        },
+        environmentVariables: {
+            OPENAI_BASE_URL: `http://localhost:${PROXY_PORT}/v1`,
+            OPENAI_API_KEY: "your-api-key-here",
+            HTTP_PROXY: `http://localhost:${PROXY_PORT}`,
+            HTTPS_PROXY: `http://localhost:${PROXY_PORT}`,
+        },
+        testConnection: {
+            healthCheck: `http://localhost:${PROXY_PORT}/proxy/health`,
+            chatTest: `http://localhost:${PROXY_PORT}/v1/chat`,
         },
     });
 });
