@@ -6,7 +6,10 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "proxy": "node backend/dist/proxy/proxyServer.js",
+    "backend": "node backend/dist/server.js",
+    "dev:all": "cd backend && npm run dev:all"
   },
   "dependencies": {
     "@edge-runtime/vm": "latest",

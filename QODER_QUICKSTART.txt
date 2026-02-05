@@ -1,0 +1,236 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                                                                          ║
+║              🧟 ZombieCoder AI - Qoder Quick Start Guide 🧟              ║
+║                                                                          ║
+║                  আমি ZombieCoder, যেখানে কোড ও কথা বলে।                 ║
+║                                                                          ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+📋 COMPLETE SETUP IN 3 STEPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1: Start ZombieCoder Backend
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open terminal in: C:\Users\sahon\Desktop\Proxy\Zombie-dance
+
+Run these commands:
+
+    cd backend
+    npm run dev:all
+
+✅ Expected Output:
+    [0] 🧟 ZombieCoder Backend Server Started
+    [0] 📍 Server running on: http://0.0.0.0:8001
+    [1] 🌐 ZombieCoder Proxy Server Started
+    [1] 📍 Proxy: http://localhost:5010
+
+⏱️ Wait for: ~5 seconds until both servers are ready
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 2: Verify Backend is Running
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open NEW terminal and run:
+
+    curl http://localhost:5010/proxy/health
+
+✅ Expected Response:
+    {"status":"ok"}
+
+If this works, you're ready for Step 3!
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 3: Configure Qoder Editor
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open Qoder
+2. Go to: Preferences → Qoder Settings → AI/LLM Settings
+3. Click: "Add Custom Provider"
+4. Fill in EXACTLY as shown below:
+
+┌────────────────────────────────────────────────────────────────────────┐
+│                                                                        │
+│  Provider Name:    ZombieCoder Local AI                                │
+│  Provider Type:    OpenAI                                              │
+│  API Base URL:     http://localhost:5010/v1                            │
+│  API Key:          sk-local                                            │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+
+5. In "Network Settings" or "Proxy Settings":
+
+┌────────────────────────────────────────────────────────────────────────┐
+│                                                                        │
+│  Proxy Mode:       No network proxy  (IMPORTANT!)                      │
+│                    OR leave URL blank if "Manual"                      │
+│                                                                        │
+│  ✅ Enable:  "Allow connections to localhost"                         │
+│  ✅ Enable:  "Bypass proxy for local addresses"                       │
+│  ❌ Disable: "Require VPN"                                             │
+│  ❌ Disable: "Use system global configuration"                         │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+
+6. Select Model: gpt-3.5-turbo (FASTEST - Recommended for testing)
+
+7. Click "Save" or "Apply"
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ TEST IN QODER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open any file in Qoder
+2. Open AI chat panel
+3. Type: "Write a hello world in Python"
+4. Press Enter
+
+✅ Expected: Python code appears in 1-3 seconds!
+
+If you see code, congratulations! 🎉 Everything is working!
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 AVAILABLE MODEL NAMES (All work with Qoder!)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+These fake OpenAI/Anthropic names automatically map to local models:
+
+⚡ FAST (1-2 seconds):
+   • gpt-3.5-turbo    → qwen2.5-coder:0.5b  ⭐ RECOMMENDED
+   • gpt-4o-mini      → qwen2.5-coder:0.5b
+   • claude-3-haiku   → qwen2.5-coder:0.5b
+
+⚖️ BALANCED (2-4 seconds):
+   • gpt-4            → qwen2.5-coder:1.5b
+   • gpt-4o           → qwen2.5-coder:1.5b
+   • claude-3-sonnet  → qwen2.5-coder:1.5b
+
+🧠 REASONING (2-4 seconds):
+   • gpt-4-turbo      → deepseek-r1:1.5b
+
+💻 CODING (2-4 seconds):
+   • claude-3-opus    → deepseek-coder:1.3b
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚨 TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Problem 1: "VPN Required" or "Check Internet Connection"
+────────────────────────────────────────────────────────
+Solution:
+  1. In Qoder settings, set Proxy Mode to: "No network proxy"
+  2. Enable: "Allow connections to localhost"
+  3. Disable: "Require VPN"
+  4. Restart Qoder
+
+Problem 2: "Connection Refused" or "ECONNREFUSED"
+──────────────────────────────────────────────────
+Solution:
+  Check if backend is running:
+
+    curl http://localhost:5010/proxy/health
+
+  If fails, restart backend:
+
+    cd C:\Users\sahon\Desktop\Proxy\Zombie-dance\backend
+    npm run dev:all
+
+Problem 3: Slow Responses (more than 5 seconds)
+────────────────────────────────────────────────
+Solution:
+  1. Switch to faster model: gpt-3.5-turbo or gpt-4o-mini
+  2. Check Ollama is running: curl http://localhost:11434/api/tags
+  3. Ensure model is pulled: ollama list
+
+Problem 4: No Response at All
+──────────────────────────────
+Solution:
+  1. Verify all services running:
+     - Backend: curl http://localhost:8001/v1/health
+     - Proxy: curl http://localhost:5010/proxy/health
+     - Ollama: curl http://localhost:11434/api/tags
+
+  2. Check backend logs in the terminal where you ran npm run dev:all
+
+  3. Restart everything:
+     - Kill all: taskkill /F /IM node.exe
+     - Start again: cd backend && npm run dev:all
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📚 ADDITIONAL DOCUMENTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+For more details, see these files in Zombie-dance folder:
+
+  📄 QODER_SETUP.md          - Complete Qoder configuration guide
+  📄 EDITOR_CONFIGS.md        - All editor configurations
+  📄 SETUP_GUIDE_BN.md        - Full setup guide in Bengali
+  📄 DELIVERY_SUMMARY.md      - Complete project summary
+  📄 qoder-config.json        - Qoder configuration template
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✨ QUICK REFERENCE CARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌────────────────────────────────────────────────────────────────────────┐
+│                                                                        │
+│  API Base:      http://localhost:5010/v1                               │
+│  API Key:       sk-local (or any dummy key)                            │
+│  Default Model: gpt-3.5-turbo                                          │
+│  Proxy:         DISABLED / None                                        │
+│  VPN:           NOT REQUIRED                                           │
+│  Internet:      NOT REQUIRED                                           │
+│                                                                        │
+│  Backend URL:   http://localhost:8001                                  │
+│  Proxy URL:     http://localhost:5010                                  │
+│  Ollama URL:    http://localhost:11434                                 │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎉 THAT'S IT! YOU'RE READY TO CODE!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Complete local AI assistant
+✅ No internet needed
+✅ No VPN required
+✅ Privacy-focused
+✅ OpenAI compatible
+✅ Fast responses (1-3 seconds)
+✅ Multiple model choices
+✅ Works offline
+
+Everything runs on YOUR computer. Your code never leaves your machine!
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 PRO TIPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Use gpt-3.5-turbo for fastest responses
+2. Switch to gpt-4 when you need better quality
+3. Keep backend terminal open while using Qoder
+4. Check backend logs if something goes wrong
+5. Model names are case-insensitive (GPT-4 = gpt-4)
+6. All data is stored locally in zombi.db
+
+
+Version: 2.0.0
+Status: ✅ Production Ready
+Date: February 5, 2026
+Language: Bengali + English
+
+আমি ZombieCoder, যেখানে কোড ও কথা বলে। Happy Coding! 🧟‍♂️💻
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Need help? Check QODER_SETUP.md or EDITOR_CONFIGS.md for detailed guides!

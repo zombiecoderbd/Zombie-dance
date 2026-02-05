@@ -5,6 +5,11 @@ import { LLMService } from "../services/llmService.js";
 import { DiffService } from "../services/diffService.js";
 import { logger } from "../utils/logger.js";
 import { DatabaseManager } from "../utils/database.js";
+import {
+    modelAliasMiddleware,
+    restoreModelNameMiddleware,
+    resolveModelAlias,
+} from "../middleware/modelAlias.js";
 
 export const chatRouter = Router();
 const llmService = new LLMService();
@@ -42,6 +47,10 @@ const vscodeAuthMiddleware = (req: Request, res: Response, next: Function) => {
 // Apply VS Code middleware
 chatRouter.use(vscodeAuthMiddleware);
 
+// Apply model aliasing middleware (converts fake OpenAI/Anthropic names to real Ollama models)
+chatRouter.use(modelAliasMiddleware);
+chatRouter.use(restoreModelNameMiddleware);
+
 // Streaming chat endpoint (SSE)
 chatRouter.post("/stream", async (req: Request, res: Response) => {
     try {
@@ -78,10 +87,22 @@ chatRouter.post("/stream", async (req: Request, res: Response) => {
         // Build enhanced system prompt with VS Code context
         const systemPrompt = buildSystemPrompt(context, vscodeContext);
 
+        // Resolve model alias (fake names to real Ollama models)
+        let selectedModel = resolveModelAlias(model);
+
         // Check if model is available
         const availableModels = db.getAvailableModels();
-        const selectedModel =
-            model || (availableModels.length > 0 ? availableModels[0].model_id : "qwen2.5:0.5b");
+        if (!selectedModel) {
+            selectedModel =
+                availableModels.length > 0 ? availableModels[0].model_id : "qwen2.5-coder:0.5b";
+        }
+
+        // Validate model exists
+        const modelExists = availableModels.some((m) => m.model_id === selectedModel);
+        if (!modelExists && availableModels.length > 0) {
+            logger.warn(`Model ${selectedModel} not found, using default`);
+            selectedModel = availableModels[0].model_id;
+        }
 
         // Log activity if VS Code context available
         if (vscodeContext?.sessionId) {
@@ -172,29 +193,66 @@ chatRouter.post("/stream", async (req: Request, res: Response) => {
 // Non-streaming chat endpoint
 chatRouter.post("/", async (req: Request, res: Response) => {
     try {
-        const { prompt, context, model } = req.body as ChatRequest;
+        const { prompt, context, model, messages, modelId, stream } = req.body as any;
         const vscodeContext = (req as any).vscodeContext;
 
-        if (!prompt) {
-            return res.status(400).json({ error: "Prompt is required" });
+        // Support both formats: messages array or prompt string
+        let userPrompt = prompt;
+        let selectedModelId = resolveModelAlias(model);
+
+        if (messages && Array.isArray(messages) && messages.length > 0) {
+            // Extract user message from messages array
+            const userMessage = messages.find((m: any) => m.role === "user");
+            if (userMessage) {
+                userPrompt = userMessage.content;
+            }
+        }
+
+        if (modelId) {
+            // Get model by ID from database
+            try {
+                const modelConfig = db.get(
+                    "SELECT model_id FROM model_configs WHERE id = ? AND is_active = 1",
+                    [modelId],
+                );
+                if (modelConfig) {
+                    selectedModelId = (modelConfig as any).model_id;
+                }
+            } catch (error) {
+                logger.warn("Failed to get model by ID", { modelId, error });
+            }
+        }
+
+        if (!userPrompt) {
+            return res.status(400).json({
+                error: "Prompt or messages is required",
+                hint: "Send either 'prompt' string or 'messages' array with user message",
+            });
         }
 
         logger.info("Processing chat request", {
-            prompt: prompt.substring(0, 50),
+            prompt: userPrompt.substring(0, 50),
+            model: selectedModelId || "default",
             vscode: !!vscodeContext,
-            sessionId: vscodeContext?.sessionId,
         });
 
-        // Build enhanced system prompt
         const systemPrompt = buildSystemPrompt(context, vscodeContext);
 
-        // Get available model
+        // Get available models
         const availableModels = db.getAvailableModels();
-        const selectedModel =
-            model || (availableModels.length > 0 ? availableModels[0].model_id : "qwen2.5:0.5b");
+        let finalModel =
+            selectedModelId ||
+            (availableModels.length > 0 ? availableModels[0].model_id : "qwen2.5-coder:0.5b");
 
-        // Generate response
-        const response = await llmService.chat(systemPrompt, prompt, selectedModel);
+        // Validate model exists
+        const modelExists = availableModels.some((m) => m.model_id === finalModel);
+        if (!modelExists && availableModels.length > 0) {
+            logger.warn(`Model ${finalModel} not found, using default`);
+            finalModel = availableModels[0].model_id;
+        }
+
+        // Call LLM
+        const response = await llmService.chat(systemPrompt, userPrompt, finalModel);
 
         // Extract diffs if VS Code context available
         let diffs: any[] = [];
@@ -206,16 +264,26 @@ chatRouter.post("/", async (req: Request, res: Response) => {
         if (vscodeContext?.sessionId) {
             db.logActivity(1, "chat_completed", "vscode_extension", {
                 sessionId: vscodeContext.sessionId,
-                model: selectedModel,
+                model: selectedModelId,
                 responseLength: response.length,
                 diffsFound: diffs.length,
             });
         }
 
         res.json({
+            id: `chat-${Date.now()}`,
+            model: finalModel,
+            message: {
+                role: "assistant",
+                content: response,
+            },
             response,
             diffs,
-            model: selectedModel,
+            usage: {
+                promptTokens: userPrompt.length,
+                completionTokens: response.length,
+                totalTokens: userPrompt.length + response.length,
+            },
             metadata: {
                 vscode: !!vscodeContext,
                 sessionId: vscodeContext?.sessionId,
@@ -225,6 +293,7 @@ chatRouter.post("/", async (req: Request, res: Response) => {
 
         logger.info("Chat request completed", {
             responseLength: response.length,
+            model: finalModel,
             sessionId: vscodeContext?.sessionId,
         });
     } catch (error) {
@@ -232,6 +301,12 @@ chatRouter.post("/", async (req: Request, res: Response) => {
 
         // Provide VS Code specific error information
         let errorMessage = error instanceof Error ? error.message : "Unknown error";
+        let errorStack = error instanceof Error ? error.stack : undefined;
+
+        logger.error("Chat error details", {
+            message: errorMessage,
+            stack: errorStack,
+        });
 
         if (errorMessage.includes("OPENAI_API_KEY")) {
             errorMessage +=
@@ -266,7 +341,7 @@ chatRouter.get("/models", async (req: Request, res: Response) => {
             });
 
             if (response.ok) {
-                const data = await response.json();
+                const data = (await response.json()) as any;
                 ollamaModels = data.models || [];
             }
         } catch (error) {

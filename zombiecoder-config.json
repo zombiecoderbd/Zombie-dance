@@ -1,0 +1,306 @@
+{
+  "server": {
+    "name": "ZombieCoder AI Assistant",
+    "version": "2.0.0",
+    "description": "আমি ZombieCoder, যেখানে কোড ও কথা বলে।",
+    "ports": {
+      "backend": 8001,
+      "proxy": 5010,
+      "admin": 3002,
+      "websocket": 3003
+    }
+  },
+  "mcpServers": {
+    "zombiecoder": {
+      "command": "node",
+      "args": [
+        "C:\\Users\\sahon\\Desktop\\Proxy\\Zombie-dance\\backend\\dist\\server.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": "8001",
+        "OLLAMA_HOST": "http://localhost:11434",
+        "ADMIN_PORT": "3002",
+        "PROXY_PORT": "5010",
+        "WEBSOCKET_PORT": "3003",
+        "JWT_SECRET": "zombiecoder_jwt_secret_2026",
+        "AUTH_ENABLED": "false",
+        "CORS_ORIGINS": "*",
+        "LOG_LEVEL": "info",
+        "MAX_TOKENS": "4096",
+        "TEMPERATURE": "0.7",
+        "STREAM_TIMEOUT": "30000"
+      }
+    }
+  },
+  "editorConnection": {
+    "type": "websocket",
+    "url": "ws://localhost:8001/v1/chat/ws",
+    "fallbackUrl": "ws://localhost:3003",
+    "proxyUrl": "http://localhost:5010",
+    "backendUrl": "http://localhost:8001",
+    "reconnectInterval": 5000,
+    "maxReconnectAttempts": 10,
+    "timeout": 30000
+  },
+  "openai": {
+    "apiBase": "http://localhost:5010/v1",
+    "compatibilityMode": true,
+    "endpoints": {
+      "completions": "/v1/chat/completions",
+      "models": "/v1/models",
+      "embeddings": "/v1/embeddings"
+    }
+  },
+  "models": {
+    "default": "qwen2.5-coder:0.5b",
+    "aliases": {
+      "gpt-4": "qwen2.5-coder:1.5b",
+      "gpt-4-turbo": "deepseek-r1:1.5b",
+      "gpt-3.5-turbo": "qwen2.5-coder:0.5b",
+      "gpt-4o": "qwen2.5-coder:1.5b",
+      "gpt-4o-mini": "qwen2.5-coder:0.5b",
+      "claude-3-opus": "deepseek-coder:1.3b",
+      "claude-3-sonnet": "qwen2.5-coder:1.5b",
+      "claude-3-haiku": "qwen2.5-coder:0.5b",
+      "gemini-pro": "gemma2:2b",
+      "gemini-1.5-pro": "gemma2:2b"
+    },
+    "mapping": {
+      "fast": "qwen2.5-coder:0.5b",
+      "balanced": "qwen2.5-coder:1.5b",
+      "powerful": "deepseek-coder:1.3b",
+      "reasoning": "deepseek-r1:1.5b",
+      "coding": "qwen2.5-coder:1.5b",
+      "chat": "qwen2.5-coder:0.5b"
+    },
+    "available": [
+      {
+        "id": "gpt-4",
+        "name": "GPT-4",
+        "provider": "openai",
+        "actualModel": "qwen2.5-coder:1.5b",
+        "description": "Most capable model for complex tasks",
+        "contextWindow": 8192,
+        "maxTokens": 4096
+      },
+      {
+        "id": "gpt-4-turbo",
+        "name": "GPT-4 Turbo",
+        "provider": "openai",
+        "actualModel": "deepseek-r1:1.5b",
+        "description": "Fast and capable reasoning model",
+        "contextWindow": 128000,
+        "maxTokens": 4096
+      },
+      {
+        "id": "gpt-3.5-turbo",
+        "name": "GPT-3.5 Turbo",
+        "provider": "openai",
+        "actualModel": "qwen2.5-coder:0.5b",
+        "description": "Fast and efficient for most tasks",
+        "contextWindow": 16384,
+        "maxTokens": 4096
+      },
+      {
+        "id": "gpt-4o",
+        "name": "GPT-4o",
+        "provider": "openai",
+        "actualModel": "qwen2.5-coder:1.5b",
+        "description": "Optimized for code and reasoning",
+        "contextWindow": 128000,
+        "maxTokens": 4096
+      },
+      {
+        "id": "gpt-4o-mini",
+        "name": "GPT-4o Mini",
+        "provider": "openai",
+        "actualModel": "qwen2.5-coder:0.5b",
+        "description": "Compact and fast model",
+        "contextWindow": 128000,
+        "maxTokens": 4096
+      },
+      {
+        "id": "claude-3-opus",
+        "name": "Claude 3 Opus",
+        "provider": "anthropic",
+        "actualModel": "deepseek-coder:1.3b",
+        "description": "Most capable Claude model",
+        "contextWindow": 200000,
+        "maxTokens": 4096
+      },
+      {
+        "id": "claude-3-sonnet",
+        "name": "Claude 3 Sonnet",
+        "provider": "anthropic",
+        "actualModel": "qwen2.5-coder:1.5b",
+        "description": "Balanced performance",
+        "contextWindow": 200000,
+        "maxTokens": 4096
+      },
+      {
+        "id": "claude-3-haiku",
+        "name": "Claude 3 Haiku",
+        "provider": "anthropic",
+        "actualModel": "qwen2.5-coder:0.5b",
+        "description": "Fast and compact",
+        "contextWindow": 200000,
+        "maxTokens": 4096
+      }
+    ]
+  },
+  "features": {
+    "rag": true,
+    "memory": true,
+    "authentication": false,
+    "ollamaOnly": true,
+    "streaming": true,
+    "websockets": true,
+    "codeExecution": false,
+    "fileOperations": true,
+    "terminalAccess": false,
+    "vectorSearch": true,
+    "contextAwareness": true
+  },
+  "performance": {
+    "responseTimeout": 30000,
+    "streamTimeout": 60000,
+    "maxConcurrentRequests": 10,
+    "rateLimiting": {
+      "enabled": false,
+      "requestsPerMinute": 60
+    },
+    "caching": {
+      "enabled": true,
+      "ttl": 3600
+    },
+    "retries": {
+      "enabled": true,
+      "maxAttempts": 3,
+      "backoff": "exponential"
+    }
+  },
+  "database": {
+    "type": "sqlite",
+    "path": "zombi.db",
+    "options": {
+      "journalMode": "WAL",
+      "synchronous": "NORMAL",
+      "cacheSize": 10000,
+      "foreignKeys": true
+    }
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "outputs": ["console", "file"],
+    "file": {
+      "path": "logs/zombiecoder.log",
+      "maxSize": "10MB",
+      "maxFiles": 5
+    }
+  },
+  "security": {
+    "cors": {
+      "enabled": true,
+      "origins": ["*"],
+      "credentials": true
+    },
+    "rateLimit": {
+      "enabled": false,
+      "windowMs": 60000,
+      "max": 100
+    },
+    "apiKey": {
+      "required": false,
+      "header": "Authorization"
+    }
+  },
+  "ollama": {
+    "host": "http://localhost:11434",
+    "timeout": 30000,
+    "models": {
+      "autoDiscover": true,
+      "refreshInterval": 300000,
+      "preferred": [
+        "qwen2.5-coder:0.5b",
+        "qwen2.5-coder:1.5b",
+        "deepseek-r1:1.5b",
+        "deepseek-coder:1.3b",
+        "gemma2:2b"
+      ]
+    }
+  },
+  "rag": {
+    "enabled": true,
+    "embeddingModel": "nomic-embed-text:latest",
+    "chunkSize": 512,
+    "chunkOverlap": 50,
+    "topK": 5,
+    "similarityThreshold": 0.7,
+    "indexPath": "data/rag-index"
+  },
+  "context": {
+    "maxTokens": 4096,
+    "maxFiles": 10,
+    "excludePatterns": [
+      ".env",
+      ".env.*",
+      "*.key",
+      "*.pem",
+      "secrets.json",
+      "credentials.json",
+      "id_rsa",
+      "id_dsa",
+      "node_modules/**",
+      ".git/**",
+      "*.log"
+    ]
+  },
+  "vscode": {
+    "extension": {
+      "id": "zombiecoder.zombie-ai-assistant",
+      "version": "2.0.0"
+    },
+    "commands": {
+      "chat": "zombie.openChat",
+      "explain": "zombie.explainCode",
+      "refactor": "zombie.refactorCode",
+      "fix": "zombie.fixCode",
+      "optimize": "zombie.optimizeCode"
+    }
+  },
+  "defaults": {
+    "temperature": 0.7,
+    "maxTokens": 4096,
+    "topP": 1.0,
+    "frequencyPenalty": 0.0,
+    "presencePenalty": 0.0,
+    "stream": true,
+    "language": "bn"
+  },
+  "endpoints": {
+    "health": "http://localhost:8001/v1/health",
+    "chat": "http://localhost:8001/v1/chat",
+    "chatStream": "http://localhost:8001/v1/chat/stream",
+    "openaiCompat": "http://localhost:5010/v1/chat/completions",
+    "models": "http://localhost:8001/api/models",
+    "websocket": "ws://localhost:8001/v1/chat/ws"
+  },
+  "troubleshooting": {
+    "logLevel": "debug",
+    "verboseErrors": true,
+    "includeStack": true,
+    "healthChecks": {
+      "backend": "curl http://localhost:8001/v1/health",
+      "proxy": "curl http://localhost:5010/proxy/health",
+      "ollama": "curl http://localhost:11434/api/tags"
+    },
+    "commonIssues": {
+      "noResponse": "Check if Ollama is running and model is pulled",
+      "connectionRefused": "Ensure backend server is started on port 8001",
+      "slowResponse": "Use faster model like qwen2.5-coder:0.5b",
+      "modelNotFound": "Pull model with: ollama pull qwen2.5-coder:0.5b"
+    }
+  }
+}

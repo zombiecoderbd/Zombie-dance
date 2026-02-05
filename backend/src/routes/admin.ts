@@ -122,7 +122,7 @@ adminRouter.get("/runtime_agent", async (req: Request, res: Response) => {
             });
 
             if (response.ok) {
-                const data = await response.json();
+                const data = (await response.json()) as any;
                 availableModels = data.models || [];
                 ollamaStatus = "online";
             }

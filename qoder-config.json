@@ -1,0 +1,151 @@
+{
+  "name": "ZombieCoder Local AI",
+  "provider": "openai",
+  "apiType": "openai",
+  "baseURL": "http://localhost:5010/v1",
+  "apiKey": "sk-zombiecoder-local",
+  "models": [
+    {
+      "id": "gpt-3.5-turbo",
+      "name": "GPT-3.5 Turbo (Fast)",
+      "description": "Fastest model - qwen2.5-coder:0.5b",
+      "contextWindow": 16384,
+      "maxTokens": 4096,
+      "supportsVision": false,
+      "supportsFunctionCalling": false
+    },
+    {
+      "id": "gpt-4",
+      "name": "GPT-4 (Balanced)",
+      "description": "Balanced quality - qwen2.5-coder:1.5b",
+      "contextWindow": 8192,
+      "maxTokens": 4096,
+      "supportsVision": false,
+      "supportsFunctionCalling": false
+    },
+    {
+      "id": "gpt-4-turbo",
+      "name": "GPT-4 Turbo (Reasoning)",
+      "description": "Best reasoning - deepseek-r1:1.5b",
+      "contextWindow": 128000,
+      "maxTokens": 4096,
+      "supportsVision": false,
+      "supportsFunctionCalling": false
+    },
+    {
+      "id": "gpt-4o",
+      "name": "GPT-4o (Coding)",
+      "description": "Best for coding - qwen2.5-coder:1.5b",
+      "contextWindow": 128000,
+      "maxTokens": 4096,
+      "supportsVision": false,
+      "supportsFunctionCalling": false
+    },
+    {
+      "id": "gpt-4o-mini",
+      "name": "GPT-4o Mini (Fast)",
+      "description": "Fast and efficient - qwen2.5-coder:0.5b",
+      "contextWindow": 128000,
+      "maxTokens": 4096,
+      "supportsVision": false,
+      "supportsFunctionCalling": false
+    }
+  ],
+  "defaultModel": "gpt-3.5-turbo",
+  "temperature": 0.7,
+  "maxTokens": 4096,
+  "stream": true,
+  "timeout": 30000,
+  "proxy": {
+    "enabled": false,
+    "type": "none",
+    "url": ""
+  },
+  "network": {
+    "useSystemProxy": false,
+    "bypassProxy": true,
+    "directConnection": true,
+    "localhost": true
+  },
+  "endpoints": {
+    "chat": "/chat/completions",
+    "models": "/models",
+    "completions": "/completions"
+  },
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "User-Agent": "Qoder-ZombieCoder/2.0.0"
+  },
+  "features": {
+    "streaming": true,
+    "functionCalling": false,
+    "vision": false,
+    "embeddings": false
+  },
+  "authentication": {
+    "type": "bearer",
+    "required": false,
+    "tokenPrefix": "Bearer"
+  },
+  "retry": {
+    "enabled": true,
+    "maxAttempts": 3,
+    "backoff": "exponential",
+    "initialDelay": 1000,
+    "maxDelay": 10000
+  },
+  "validation": {
+    "validateSSL": false,
+    "allowSelfSigned": true,
+    "rejectUnauthorized": false
+  },
+  "logging": {
+    "enabled": true,
+    "level": "info",
+    "logRequests": true,
+    "logResponses": false
+  },
+  "performance": {
+    "keepAlive": true,
+    "keepAliveMsecs": 1000,
+    "maxSockets": 10,
+    "maxFreeSockets": 5
+  },
+  "qoder": {
+    "customProvider": true,
+    "localMode": true,
+    "offlineCapable": true,
+    "requiresVPN": false,
+    "requiresInternet": false,
+    "isLocalhost": true,
+    "trustLocalhost": true
+  },
+  "troubleshooting": {
+    "vpnRequired": false,
+    "proxyBypass": [
+      "localhost",
+      "127.0.0.1",
+      "::1",
+      "*.local"
+    ],
+    "noProxy": "localhost,127.0.0.1,::1",
+    "directConnect": true,
+    "healthCheck": "http://localhost:5010/proxy/health",
+    "testEndpoint": "http://localhost:5010/v1/chat/completions"
+  },
+  "quickTest": {
+    "url": "http://localhost:5010/v1/chat/completions",
+    "method": "POST",
+    "body": {
+      "model": "gpt-3.5-turbo",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Say 'ZombieCoder is working!' in 5 words"
+        }
+      ],
+      "stream": false
+    }
+  }
+}

@@ -5,6 +5,15 @@ import { LLMService } from "../services/llmService.js";
 import { DatabaseManager } from "../utils/database.js";
 import { URL } from "url";
 
+interface JSONRPCMessage {
+    jsonrpc: string;
+    id?: string | number;
+    method?: string;
+    params?: any;
+    result?: any;
+    error?: any;
+}
+
 interface VSCodeWebSocketMessage {
     type: "chat" | "ping" | "session" | "model_switch";
     id?: string;
@@ -108,7 +117,16 @@ class WebSocketManager {
         ws.on("message", async (data) => {
             try {
                 session.lastActivity = Date.now();
-                const message = JSON.parse(data.toString()) as VSCodeWebSocketMessage;
+                const rawMessage = JSON.parse(data.toString());
+
+                // Check if this is a JSON-RPC message (e.g., from prettier or other tools)
+                if (rawMessage.jsonrpc && rawMessage.method) {
+                    this.handleJSONRPC(ws, rawMessage as JSONRPCMessage);
+                    return;
+                }
+
+                // Handle as regular VSCode WebSocket message
+                const message = rawMessage as VSCodeWebSocketMessage;
 
                 logger.debug("WebSocket message received", {
                     sessionId: session.id,
@@ -163,6 +181,34 @@ class WebSocketManager {
         ws.on("pong", () => {
             session.lastActivity = Date.now();
         });
+    }
+
+    private handleJSONRPC(ws: WebSocket, message: JSONRPCMessage): void {
+        logger.debug("JSON-RPC message received", {
+            method: message.method,
+            id: message.id,
+        });
+
+        // Handle JSON-RPC methods that we don't support
+        // Send back a proper JSON-RPC error response
+        const response: JSONRPCMessage = {
+            jsonrpc: "2.0",
+            id: message.id,
+            error: {
+                code: -32601,
+                message: "Method not found",
+                data: {
+                    method: message.method,
+                    hint: "This WebSocket server is for ZombieCursor AI chat only. JSON-RPC methods like prettier/format are not supported.",
+                },
+            },
+        };
+
+        try {
+            ws.send(JSON.stringify(response));
+        } catch (error) {
+            logger.error("Error sending JSON-RPC response:", error);
+        }
     }
 
     private async handleMessage(
