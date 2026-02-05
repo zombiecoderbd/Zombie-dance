@@ -1,0 +1,87 @@
+{
+  "name": "zombie-ai-assistant",
+  "displayName": "ZombieCoder AI",
+  "description": "AI code assistant with Ollama integration - আমি ZombieCoder, যেখানে কোড ও কথা বলে",
+  "version": "2.0.0",
+  "publisher": "zombiecoder",
+  "icon": "resources/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zombiecoder1/zombiecoder"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "AI",
+    "Chat",
+    "Programming Languages",
+    "Productivity"
+  ],
+  "keywords": [
+    "ai",
+    "assistant",
+    "chat",
+    "code-generation",
+    "zombie",
+    "ollama",
+    "bengali",
+    "local-ai"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension_simple.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "zombie.chat",
+        "title": "Start ZombieCoder Chat",
+        "category": "ZombieCoder"
+      },
+      {
+        "command": "zombie.testConnection",
+        "title": "Test Backend Connection",
+        "category": "ZombieCoder"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "zombie.chat",
+        "key": "ctrl+shift+z",
+        "mac": "cmd+shift+z"
+      }
+    ],
+    "configuration": {
+      "title": "ZombieCoder AI",
+      "properties": {
+        "zombie.endpoint": {
+          "type": "string",
+          "default": "http://localhost:8001",
+          "description": "Backend API endpoint URL",
+          "scope": "machine-overridable"
+        },
+        "zombie.model": {
+          "type": "string",
+          "default": "qwen2.5:0.5b",
+          "description": "Default AI model to use",
+          "scope": "machine-overridable"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "compile:simple": "tsc src/extension_simple.ts --outDir dist --target es2020 --module commonjs --lib es2020 --declaration false --sourceMap true --strict true --esModuleInterop true --skipLibCheck true",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.22.0",
+    "typescript": "^5.3.2"
+  }
+}

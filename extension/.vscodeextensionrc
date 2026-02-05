@@ -1,0 +1,7 @@
+{
+  "extensionKind": ["ui", "workspace"],
+  "untrustedWorkspaces": {
+    "supported": true
+  },
+  "sponsorLink": "https://github.com/sponsors/zombiecoder1"
+}

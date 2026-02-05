@@ -1,0 +1,259 @@
+{
+  "name": "zombie-ai-assistant",
+  "displayName": "ZombieCursor AI",
+  "description": "Local-first AI code assistant with semantic search (RAG), identity-anchored agents, terminal permission controls, and privacy guarantees",
+  "version": "2.0.0",
+  "publisher": "zombiecoder",
+  "icon": "resources/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zombiecoder1/TypeScript-extensions-VS-Code"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["AI", "Chat", "Programming Languages", "Productivity"],
+  "keywords": [
+    "ai",
+    "assistant",
+    "copilot",
+    "chat",
+    "code-generation",
+    "zombie",
+    "local",
+    "privacy",
+    "rag",
+    "semantic-search"
+  ],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "chatParticipants": [
+      {
+        "id": "zombie.assistant",
+        "name": "zombie",
+        "description": "ZombieCursor AI - আমি ZombieCoder, যেখানে কোড ও কথা বলে।",
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "explain",
+            "description": "Explain selected code in detail"
+          },
+          {
+            "name": "refactor",
+            "description": "Refactor and improve code quality"
+          },
+          {
+            "name": "fix",
+            "description": "Find and fix bugs in code"
+          },
+          {
+            "name": "optimize",
+            "description": "Optimize code for performance"
+          },
+          {
+            "name": "search",
+            "description": "Semantic search across your codebase using RAG"
+          }
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "zombie.openChat",
+        "title": "Open ZombieCursor Chat",
+        "category": "ZombieCursor"
+      },
+      {
+        "command": "zombie.explainCode",
+        "title": "Explain Code",
+        "category": "ZombieCursor"
+      },
+      {
+        "command": "zombie.refactorCode",
+        "title": "Refactor Code",
+        "category": "ZombieCursor"
+      },
+      {
+        "command": "zombie.applyDiff",
+        "title": "Apply Diff Changes",
+        "category": "ZombieCursor"
+      },
+      {
+        "command": "zombie.discardDiff",
+        "title": "Discard Diff Changes",
+        "category": "ZombieCursor"
+      },
+      {
+        "command": "zombie.newChat",
+        "title": "Start New Chat",
+        "category": "ZombieCursor",
+        "icon": "$(add)"
+      },
+      {
+        "command": "zombie.indexProject",
+        "title": "Index This Project for RAG Search",
+        "category": "ZombieCursor",
+        "icon": "$(search)"
+      },
+      {
+        "command": "zombie.showHistory",
+        "title": "Show Chat History",
+        "category": "ZombieCursor",
+        "icon": "$(history)"
+      },
+      {
+        "command": "zombie.toggleTerminalPermissions",
+        "title": "Toggle Terminal Command Permissions",
+        "category": "ZombieCursor"
+      },
+      {
+        "command": "zombie.showIdentity",
+        "title": "Show System Identity & Owner Information",
+        "category": "ZombieCursor"
+      }
+    ],
+    "configuration": {
+      "title": "ZombieCursor AI",
+      "properties": {
+        "zombie.endpoint": {
+          "type": "string",
+          "default": "http://localhost:8001",
+          "description": "Backend API endpoint URL",
+          "scope": "machine-overridable"
+        },
+        "zombie.provider": {
+          "type": "string",
+          "default": "openai",
+          "enum": ["openai", "anthropic", "ollama"],
+          "description": "AI provider to use",
+          "scope": "machine-overridable"
+        },
+        "zombie.model": {
+          "type": "string",
+          "default": "gpt-4",
+          "enum": ["gpt-4", "gpt-4-turbo", "gpt-3.5-turbo", "claude-3-opus", "claude-3-sonnet", "llama2", "mistral"],
+          "description": "LLM model to use for code generation",
+          "scope": "machine-overridable"
+        },
+        "zombie.apiKey": {
+          "type": "string",
+          "description": "API key for the selected provider (stored securely)",
+          "scope": "machine-overridable"
+        },
+        "zombie.contextSizeBytes": {
+          "type": "number",
+          "default": 20480,
+          "description": "Maximum context size in bytes",
+          "scope": "machine-overridable"
+        },
+        "zombie.excludeSensitive": {
+          "type": "array",
+          "default": [".env", ".env.*", "*.key", "*.pem", "secrets.json", "credentials.json", "id_rsa", "id_dsa"],
+          "description": "File patterns to exclude from context",
+          "scope": "machine-overridable"
+        },
+        "zombie.streamTransport": {
+          "type": "string",
+          "default": "sse",
+          "enum": ["sse", "websocket"],
+          "description": "Transport protocol for streaming",
+          "scope": "machine-overridable"
+        },
+        "zombie.autosaveOnApply": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically save files after applying diffs",
+          "scope": "machine-overridable"
+        },
+        "zombie.enableInlineCompletions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable inline code completions",
+          "scope": "machine-overridable"
+        },
+        "zombie.allowTerminalCommands": {
+          "type": "boolean",
+          "default": false,
+          "description": "Allow ZombieCursor to execute terminal commands with permission",
+          "scope": "machine-overridable"
+        },
+        "zombie.enableRAG": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Retrieval-Augmented Generation (semantic search)",
+          "scope": "machine-overridable"
+        },
+        "zombie.ragTopK": {
+          "type": "number",
+          "default": 5,
+          "description": "Number of relevant code snippets to retrieve for RAG",
+          "scope": "machine-overridable"
+        },
+        "zombie.embeddingProvider": {
+          "type": "string",
+          "default": "openai",
+          "enum": ["openai", "ollama"],
+          "description": "Provider for text embeddings in RAG",
+          "scope": "machine-overridable"
+        },
+        "zombie.animationSpeed": {
+          "type": "number",
+          "default": 200,
+          "description": "Dance flow animation speed in milliseconds",
+          "scope": "machine-overridable"
+        }
+      }
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "zombie.explainCode",
+          "when": "editorHasSelection",
+          "group": "zombie@1"
+        },
+        {
+          "command": "zombie.refactorCode",
+          "when": "editorHasSelection",
+          "group": "zombie@2"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "zombie.openChat",
+        "key": "ctrl+shift+z",
+        "mac": "cmd+shift+z"
+      },
+      {
+        "command": "zombie.indexProject",
+        "key": "ctrl+shift+i",
+        "mac": "cmd+shift+i"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "@vscode/test-electron": "^2.3.8",
+    "@vscode/vsce": "^2.22.0",
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "diff": "^5.1.0",
+    "eventsource": "^2.0.2"
+  }
+}

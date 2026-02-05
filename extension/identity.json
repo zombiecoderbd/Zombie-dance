@@ -1,0 +1,40 @@
+{
+  "system_identity": {
+    "name": "ZombieCoder",
+    "version": "2.0.0",
+    "tagline": "যেখানে কোড ও কথা বলে",
+    "description": "Local-first AI assistant for rapid code solutions with enhanced security and privacy",
+    "branding": {
+      "owner": "Sahon Srabon",
+      "organization": "Developer Zone",
+      "address": "235 South Pirarbag, Amtala Bazar, Mirpur - 60 feet",
+      "location": "Dhaka, Bangladesh"
+    },
+    "contact": {
+      "phone": "+880 1323-626282",
+      "email": "infi@zombiecoder.my.id",
+      "website": "https://zombiecoder.my.id"
+    },
+    "license": "Proprietary - Local Freedom Protocol",
+    "repository": "https://github.com/zombiecoder1/TypeScript-extensions-VS-Code",
+    "capabilities": [
+      "Semantic code search with RAG",
+      "Multi-provider AI support (OpenAI, Anthropic, Ollama)",
+      "Terminal-safe code execution",
+      "Local-first data processing",
+      "Real-time streaming responses",
+      "Code diff application",
+      "Project indexing and analysis"
+    ],
+    "security": {
+      "encryption": "AES-256 for local storage",
+      "data_location": "Local machine only",
+      "no_telemetry": true,
+      "no_tracking": true
+    },
+    "api_headers": {
+      "X-Powered-By": "ZombieCoder-by-SahonSrabon",
+      "X-System-Identity": "ZombieCoder/2.0.0"
+    }
+  }
+}

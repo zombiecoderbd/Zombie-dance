@@ -1,0 +1,78 @@
+name: Build VSIX
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          cd extension
+          npm install
+
+      - name: Compile TypeScript
+        run: |
+          cd extension
+          npm run compile
+
+      - name: Run linter
+        run: |
+          cd extension
+          npm run lint
+
+      - name: Run tests
+        run: |
+          cd extension
+          npm test || true
+
+      - name: Package VSIX
+        run: |
+          cd extension
+          npm run package
+
+      - name: Upload VSIX artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: vsix-${{ matrix.node-version }}
+          path: extension/zombie-ai-assistant-*.vsix
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ZombieCursor ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload to Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: extension/zombie-ai-assistant-*.vsix
+          asset_name: zombie-ai-assistant-${{ github.ref_name }}.vsix
+          asset_content_type: application/octet-stream

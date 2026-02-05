@@ -1,0 +1,289 @@
+{
+    // ╔══════════════════════════════════════════════════════════════════════════╗
+    // ║                    🧟 ZombieCoder Zed Settings 🧟                        ║
+    // ║         গরিবদের জন্য ফ্রি AI - Ollama Local Models Configuration          ║
+    // ╚══════════════════════════════════════════════════════════════════════════╝
+    //
+    // এই ফাইলটি কপি করুন: ~/.config/zed/settings.json
+    // Copy this file to: ~/.config/zed/settings.json (Linux)
+    //                    ~/Library/Application Support/Zed/settings.json (macOS)
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 🤖 AI / LLM Configuration - Ollama Setup
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    "assistant": {
+        "version": "2",
+        "enabled": true,
+        "default_model": {
+            "provider": "ollama",
+            "model": "qwen2.5:1.5b"
+        }
+    },
+
+    // Ollama Provider Configuration
+    "language_models": {
+        "ollama": {
+            "api_url": "http://localhost:11434",
+            "low_speed_timeout_in_seconds": 120,
+            "available_models": [
+                // ═══════════════════════════════════════════════════════════════════
+                // 🔥 Your Installed LOCAL Models
+                // ═══════════════════════════════════════════════════════════════════
+                {
+                    "name": "qwen2.5:1.5b",
+                    "display_name": "🏆 Qwen 2.5 1.5B (Best Local - Recommended)",
+                    "max_tokens": 32768,
+                    "keep_alive": "30m"
+                },
+                {
+                    "name": "qwen2.5:0.5b",
+                    "display_name": "🚀 Qwen 2.5 0.5B (Ultra Fast & Light)",
+                    "max_tokens": 32768,
+                    "keep_alive": "30m"
+                },
+                {
+                    "name": "nomic-embed-text:latest",
+                    "display_name": "📊 Nomic Embed (Text Embeddings)",
+                    "max_tokens": 8192,
+                    "keep_alive": "30m"
+                },
+
+                // ═══════════════════════════════════════════════════════════════════
+                // ☁️ Your Cloud/Remote Models (via Ollama)
+                // ═══════════════════════════════════════════════════════════════════
+                {
+                    "name": "gemini-3-pro-preview:latest",
+                    "display_name": "💎 Gemini 3 Pro Preview (Cloud)",
+                    "max_tokens": 128000,
+                    "keep_alive": "5m"
+                },
+                {
+                    "name": "gpt-oss:120b-cloud",
+                    "display_name": "🧠 GPT-OSS 120B (Cloud - Powerful)",
+                    "max_tokens": 128000,
+                    "keep_alive": "5m"
+                },
+                {
+                    "name": "glm-4.7:cloud",
+                    "display_name": "🌟 GLM 4.7 (Cloud)",
+                    "max_tokens": 128000,
+                    "keep_alive": "5m"
+                },
+                {
+                    "name": "glm-4.6:cloud",
+                    "display_name": "🌟 GLM 4.6 (Cloud)",
+                    "max_tokens": 128000,
+                    "keep_alive": "5m"
+                }
+            ]
+        }
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 🔧 Inline Assistant (Code Completion in Editor)
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    "inline_completions": {
+        "disabled_globs": [
+            ".env",
+            ".env.*",
+            "*.pem",
+            "*.key",
+            "*.secret",
+            "**/secrets/**",
+            "**/credentials/**"
+        ]
+    },
+
+    "features": {
+        "inline_completion_provider": "none"
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 🌐 ZombieCoder Service URLs
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    "zombiecoder": {
+        "main_app_url": "http://localhost:3000",
+        "websocket_url": "http://localhost:3003",
+        "lsp_url": "http://localhost:3004",
+        "dap_url": "http://localhost:3005",
+        "proxy_url": "http://localhost:5010",
+        "codebase_sync_url": "http://localhost:5051",
+        "ollama_url": "http://localhost:11434",
+        "enable_ai_chat": true,
+        "enable_code_sync": true,
+        "enable_ai_autocomplete": true
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 📝 Language Server Protocol (LSP) Configuration
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    "lsp": {
+        "rust-analyzer": {
+            "initialization_options": {
+                "checkOnSave": {
+                    "command": "clippy"
+                }
+            }
+        },
+        "pyright": {
+            "settings": {
+                "python.analysis": {
+                    "typeCheckingMode": "basic",
+                    "autoImportCompletions": true,
+                    "diagnosticSeverityOverrides": {
+                        "reportUnusedImport": "warning",
+                        "reportUnusedVariable": "warning"
+                    }
+                }
+            }
+        },
+        "typescript-language-server": {
+            "initialization_options": {
+                "preferences": {
+                    "includeInlayParameterNameHints": "all",
+                    "includeInlayParameterNameHintsWhenArgumentMatchesName": false,
+                    "includeInlayFunctionParameterTypeHints": true,
+                    "includeInlayVariableTypeHints": true,
+                    "includeInlayPropertyDeclarationTypeHints": true,
+                    "includeInlayFunctionLikeReturnTypeHints": true,
+                    "includeInlayEnumMemberValueHints": true
+                }
+            }
+        }
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 🎨 Editor Settings
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    "theme": "One Dark",
+    "ui_font_size": 16,
+    "buffer_font_size": 14,
+    "buffer_font_family": "JetBrains Mono",
+    "buffer_font_features": {
+        "calt": true,
+        "liga": true
+    },
+
+    "tab_size": 2,
+    "hard_tabs": false,
+    "soft_wrap": "editor_width",
+    "preferred_line_length": 100,
+    "format_on_save": "on",
+    "autosave": {
+        "after_delay": {
+            "milliseconds": 1000
+        }
+    },
+
+    "show_whitespaces": "selection",
+    "remove_trailing_whitespace_on_save": true,
+    "ensure_final_newline_on_save": true,
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 🖥️ Terminal Settings
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    "terminal": {
+        "shell": {
+            "program": "/bin/bash"
+        },
+        "font_size": 14,
+        "font_family": "JetBrains Mono",
+        "line_height": {
+            "custom": 1.4
+        },
+        "copy_on_select": true,
+        "working_directory": "current_project_directory"
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // ⌨️ Vim Mode (Optional - uncomment if you like Vim)
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    // "vim_mode": true,
+    // "vim": {
+    //   "use_system_clipboard": "always",
+    //   "use_multiline_find": true
+    // },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 📁 Project Panel Settings
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    "project_panel": {
+        "dock": "left",
+        "git_status": true,
+        "default_width": 280,
+        "auto_fold_dirs": true,
+        "folder_icons": true,
+        "file_icons": true
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 🚫 File Exclusions
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    "file_scan_exclusions": [
+        "**/.git",
+        "**/.svn",
+        "**/.hg",
+        "**/CVS",
+        "**/.DS_Store",
+        "**/Thumbs.db",
+        "**/node_modules",
+        "**/__pycache__",
+        "**/.venv",
+        "**/venv",
+        "**/.env",
+        "**/target",
+        "**/build",
+        "**/dist",
+        "**/.next",
+        "**/.nuxt",
+        "**/coverage",
+        "**/.cache"
+    ],
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 📥 Your Installed Models Quick Reference
+    // ═══════════════════════════════════════════════════════════════════════════
+    //
+    // LOCAL MODELS (No internet required):
+    //   - qwen2.5:1.5b     (986 MB) - Best balance, recommended!
+    //   - qwen2.5:0.5b     (397 MB) - Ultra fast, for quick tasks
+    //   - nomic-embed-text (274 MB) - For text embeddings
+    //
+    // CLOUD MODELS (Requires internet):
+    //   - gemini-3-pro-preview - Google's latest
+    //   - gpt-oss:120b-cloud   - Powerful open-source
+    //   - glm-4.7:cloud        - Chinese LLM
+    //   - glm-4.6:cloud        - Chinese LLM
+    //
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 🚀 Quick Start Guide
+    // ═══════════════════════════════════════════════════════════════════════════
+    //
+    // 1. Make sure Ollama is running:
+    //    ollama serve
+    //
+    // 2. Copy this file to Zed config:
+    //    cp config/zed_settings.json ~/.config/zed/settings.json
+    //
+    // 3. Restart Zed editor
+    //
+    // 4. Open Assistant panel: Ctrl+Shift+Z (or Cmd+Shift+Z on Mac)
+    //
+    // 5. Start coding with FREE AI! 🎉
+    //
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    "telemetry": {
+        "diagnostics": false,
+        "metrics": false
+    }
+}

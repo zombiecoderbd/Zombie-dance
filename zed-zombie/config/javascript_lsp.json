@@ -1,0 +1,60 @@
+{
+  "language_id": "javascript",
+  "name": "ZombieCoder JavaScript Language Server",
+  "command": {
+    "command": "node",
+    "args": [
+      "${workspace}/src/lsp_proxy.js",
+      "--server-url",
+      "http://localhost:3004"
+    ]
+  },
+  "initialization_options": {
+    "zombie": true,
+    "host": "localhost",
+    "port": 3004,
+    "rootPath": "${workspace}",
+    "settings": {
+      "javascript.validate.enable": true,
+      "javascript.format.enable": true,
+      "javascript.suggest.autoImports": true
+    }
+  },
+  "settings": {
+    "javascript.inlayHints.parameterNames.enabled": "all",
+    "javascript.inlayHints.parameterTypes.enabled": true,
+    "javascript.inlayHints.variableTypes.enabled": true
+  },
+  "workspace_symbol": {
+    "search": {
+      "query": {
+        "pattern": "^[a-zA-Z_$][a-zA-Z0-9_$]*$"
+      }
+    }
+  },
+  "hover_provider": true,
+  "definition_provider": true,
+  "references_provider": true,
+  "document_highlight_provider": true,
+  "document_symbol_provider": true,
+  "workspace_symbol_provider": true,
+  "code_action_provider": true,
+  "completion_provider": {
+    "resolve_provider": true,
+    "trigger_characters": [
+      ".",
+      "\"",
+      "'",
+      "/",
+      "@",
+      "#",
+      "("
+    ]
+  },
+  "signature_help_provider": {
+    "trigger_characters": [
+      "(",
+      ","
+    ]
+  }
+}

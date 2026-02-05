@@ -1,0 +1,292 @@
+[
+  // ╔══════════════════════════════════════════════════════════════════════════╗
+  // ║                    🧟 ZombieCoder Zed Keymap 🧟                          ║
+  // ║         গরিবদের জন্য ফ্রি AI - Keyboard Shortcuts                          ║
+  // ╚══════════════════════════════════════════════════════════════════════════╝
+  //
+  // এই ফাইলটি কপি করুন: ~/.config/zed/keymap.json
+  // Copy this file to: ~/.config/zed/keymap.json (Linux)
+  //                    ~/Library/Application Support/Zed/keymap.json (macOS)
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 🤖 AI Assistant Shortcuts
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    "context": "Workspace",
+    "bindings": {
+      // Toggle AI Assistant Panel
+      "ctrl-shift-z": "assistant::ToggleFocus",
+      "ctrl-shift-a": "assistant::InlineAssist",
+
+      // Quote selected code to assistant
+      "ctrl-shift-q": "assistant::QuoteSelection",
+
+      // New assistant context
+      "ctrl-shift-n": "assistant::NewContext",
+
+      // Deploy inline assistant on selection
+      "ctrl-enter": "assistant::InlineAssist"
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 📝 Editor Context Shortcuts
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    "context": "Editor",
+    "bindings": {
+      // AI Inline Assist (ask AI about selected code)
+      "ctrl-shift-i": "assistant::InlineAssist",
+      "alt-enter": "assistant::InlineAssist",
+
+      // Code Actions
+      "ctrl-.": "editor::ToggleCodeActions",
+      "ctrl-shift-.": "editor::ToggleCodeActions",
+
+      // Quick Fix
+      "ctrl-shift-f": "editor::Format",
+
+      // Go to Definition
+      "f12": "editor::GoToDefinition",
+      "ctrl-click": "editor::GoToDefinition",
+
+      // Go to Type Definition
+      "ctrl-shift-f12": "editor::GoToTypeDefinition",
+
+      // Find References
+      "shift-f12": "editor::FindAllReferences",
+
+      // Rename Symbol
+      "f2": "editor::Rename",
+
+      // Hover Info
+      "ctrl-k ctrl-i": "editor::Hover",
+
+      // Toggle Comments
+      "ctrl-/": "editor::ToggleComments",
+      "ctrl-shift-/": "editor::ToggleBlockComment",
+
+      // Multi-cursor
+      "ctrl-d": "editor::SelectNext",
+      "ctrl-shift-l": "editor::SelectAllMatches",
+      "alt-click": "editor::AddSelectionAbove",
+
+      // Line Operations
+      "alt-up": "editor::MoveLineUp",
+      "alt-down": "editor::MoveLineDown",
+      "ctrl-shift-k": "editor::DeleteLine",
+      "ctrl-shift-d": "editor::DuplicateLine",
+
+      // Folding
+      "ctrl-shift-[": "editor::Fold",
+      "ctrl-shift-]": "editor::UnfoldLines",
+      "ctrl-k ctrl-0": "editor::FoldAll",
+      "ctrl-k ctrl-j": "editor::UnfoldAll",
+
+      // Indentation
+      "ctrl-]": "editor::Indent",
+      "ctrl-[": "editor::Outdent"
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 🔍 Search & Navigation
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    "context": "Workspace",
+    "bindings": {
+      // File Search
+      "ctrl-p": "file_finder::Toggle",
+      "ctrl-shift-p": "command_palette::Toggle",
+
+      // Global Search
+      "ctrl-shift-f": "pane::DeploySearch",
+      "ctrl-shift-h": "search::ToggleReplace",
+
+      // Symbol Search
+      "ctrl-shift-o": "outline::Toggle",
+      "ctrl-t": "project_symbols::Toggle",
+
+      // Go to Line
+      "ctrl-g": "go_to_line::Toggle",
+
+      // Recent Files
+      "ctrl-tab": "pane::ActivateNextItem",
+      "ctrl-shift-tab": "pane::ActivatePrevItem",
+
+      // Close Tab
+      "ctrl-w": "pane::CloseActiveItem",
+      "ctrl-shift-t": "pane::ReopenClosedItem"
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 📁 Project & Panel Navigation
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    "context": "Workspace",
+    "bindings": {
+      // Toggle Panels
+      "ctrl-b": "workspace::ToggleLeftDock",
+      "ctrl-shift-e": "project_panel::ToggleFocus",
+      "ctrl-shift-m": "diagnostics::Deploy",
+      "ctrl-`": "terminal_panel::ToggleFocus",
+      "ctrl-shift-`": "workspace::NewTerminal",
+
+      // Git Panel
+      "ctrl-shift-g": "git_panel::ToggleFocus",
+
+      // Outline Panel
+      "ctrl-shift-o": "outline_panel::ToggleFocus",
+
+      // Split Editor
+      "ctrl-\\": "pane::SplitRight",
+      "ctrl-shift-\\": "pane::SplitDown",
+
+      // Focus Navigation
+      "ctrl-1": "workspace::ActivatePane",
+      "ctrl-2": "workspace::ActivatePane",
+      "ctrl-3": "workspace::ActivatePane",
+
+      // Zoom
+      "ctrl-=": "zed::IncreaseBufferFontSize",
+      "ctrl--": "zed::DecreaseBufferFontSize",
+      "ctrl-0": "zed::ResetBufferFontSize"
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 🖥️ Terminal Shortcuts
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    "context": "Terminal",
+    "bindings": {
+      // Copy/Paste
+      "ctrl-shift-c": "terminal::Copy",
+      "ctrl-shift-v": "terminal::Paste",
+
+      // Clear Terminal
+      "ctrl-l": "terminal::Clear",
+
+      // Search in Terminal
+      "ctrl-shift-f": "terminal::SearchTerminal",
+
+      // New Terminal
+      "ctrl-shift-t": "workspace::NewTerminal"
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 🧟 ZombieCoder Specific Shortcuts
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    "context": "Workspace",
+    "bindings": {
+      // Quick AI Explain (select code and press this)
+      "ctrl-shift-x": "assistant::InlineAssist",
+
+      // Ask AI to Refactor
+      "ctrl-shift-r": "assistant::InlineAssist",
+
+      // Ask AI to Write Tests
+      "ctrl-shift-t": "assistant::InlineAssist",
+
+      // Ask AI to Add Comments
+      "ctrl-shift-c": "assistant::InlineAssist"
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 🐛 Debug Shortcuts (DAP)
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    "context": "Workspace",
+    "bindings": {
+      // Start/Continue Debugging
+      "f5": "debugger::Continue",
+
+      // Stop Debugging
+      "shift-f5": "debugger::Stop",
+
+      // Step Over
+      "f10": "debugger::StepOver",
+
+      // Step Into
+      "f11": "debugger::StepInto",
+
+      // Step Out
+      "shift-f11": "debugger::StepOut",
+
+      // Toggle Breakpoint
+      "f9": "debugger::ToggleBreakpoint"
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 📋 Assistant Panel Context
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    "context": "AssistantPanel",
+    "bindings": {
+      // Send Message
+      "ctrl-enter": "assistant::Assist",
+      "shift-enter": "assistant::InsertNewline",
+
+      // Cycle through models
+      "ctrl-shift-m": "assistant::CycleNextModel",
+
+      // Cancel current generation
+      "escape": "assistant::Cancel",
+
+      // Copy last response
+      "ctrl-shift-c": "assistant::CopyLastAssistantMessage",
+
+      // New conversation
+      "ctrl-n": "assistant::NewContext"
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 📖 Quick Reference
+  // ═══════════════════════════════════════════════════════════════════════════
+  //
+  // 🤖 AI ASSISTANT:
+  //    Ctrl+Shift+Z     → Toggle AI Panel
+  //    Ctrl+Shift+A     → Inline AI Assist
+  //    Ctrl+Shift+Q     → Quote Selection to AI
+  //    Ctrl+Enter       → Send message / Inline assist
+  //
+  // 📝 EDITOR:
+  //    Ctrl+.           → Code Actions
+  //    F12              → Go to Definition
+  //    Shift+F12        → Find References
+  //    F2               → Rename Symbol
+  //    Ctrl+/           → Toggle Comment
+  //    Alt+↑/↓          → Move Line Up/Down
+  //
+  // 🔍 SEARCH:
+  //    Ctrl+P           → Quick Open File
+  //    Ctrl+Shift+P     → Command Palette
+  //    Ctrl+Shift+F     → Global Search
+  //    Ctrl+T           → Go to Symbol
+  //
+  // 📁 PANELS:
+  //    Ctrl+B           → Toggle Sidebar
+  //    Ctrl+`           → Toggle Terminal
+  //    Ctrl+Shift+E     → Focus Explorer
+  //    Ctrl+Shift+G     → Git Panel
+  //
+  // 🐛 DEBUG:
+  //    F5               → Start/Continue
+  //    F9               → Toggle Breakpoint
+  //    F10              → Step Over
+  //    F11              → Step Into
+  //
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Empty binding to ensure valid JSON (can be removed)
+  {
+    "context": "Global",
+    "bindings": {}
+  }
+]

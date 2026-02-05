@@ -1,0 +1,112 @@
+{
+  "name": "zombiecoder-zed-extension",
+  "version": "0.1.0",
+  "description": "Zed editor extension for ZombieCoder services including LSP, DAP, WebSocket, and Ollama integration",
+  "main": "src/main.js",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js --watch",
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zombiecoder/zed-extension"
+  },
+  "author": "Sahon Srabon",
+  "license": "MIT",
+  "engines": {
+    "zed": ">=0.1.0"
+  },
+  "categories": [
+    "language",
+    "linters",
+    "formatters",
+    "debuggers"
+  ],
+  "languages": [
+    {
+      "id": "python",
+      "extensions": [".py"],
+      "language_server": "config/python_lsp.json"
+    },
+    {
+      "id": "javascript",
+      "extensions": [".js"],
+      "language_server": "config/javascript_lsp.json"
+    },
+    {
+      "id": "typescript",
+      "extensions": [".ts"],
+      "language_server": "config/typescript_lsp.json"
+    }
+  ],
+  "grammars": [],
+  "configurations": [
+    {
+      "title": "ZombieCoder Settings",
+      "properties": {
+        "zombiecoder.main_app_url": {
+          "type": "string",
+          "default": "http://localhost:3000",
+          "description": "URL for ZombieCoder main application"
+        },
+        "zombiecoder.websocket_url": {
+          "type": "string",
+          "default": "http://localhost:3003",
+          "description": "URL for ZombieCoder WebSocket service"
+        },
+        "zombiecoder.lsp_url": {
+          "type": "string",
+          "default": "http://localhost:3004",
+          "description": "URL for ZombieCoder LSP service"
+        },
+        "zombiecoder.dap_url": {
+          "type": "string",
+          "default": "http://localhost:3005",
+          "description": "URL for ZombieCoder DAP service"
+        },
+        "zombiecoder.proxy_url": {
+          "type": "string",
+          "default": "http://localhost:5010",
+          "description": "URL for ZombieCoder Hybrid Proxy service"
+        },
+        "zombiecoder.codebase_sync_url": {
+          "type": "string",
+          "default": "http://localhost:5051",
+          "description": "URL for ZombieCoder Codebase Sync service"
+        },
+        "zombiecoder.ollama_url": {
+          "type": "string",
+          "default": "http://localhost:11434",
+          "description": "URL for Ollama Local Model service"
+        }
+      }
+    }
+  ],
+  "configuration": {
+    "title": "ZombieCoder Settings",
+    "properties": {
+      "zombiecoder.enable_ai_chat": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable AI chat integration"
+      },
+      "zombiecoder.enable_code_sync": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable codebase synchronization"
+      },
+      "zombiecoder.enable_ai_autocomplete": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable AI-powered autocompletion"
+      }
+    }
+  },
+  "dependencies": {
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.9"
+  }
+}

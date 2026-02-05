@@ -1,0 +1,43 @@
+{
+  "type": "zombiecoder_dap",
+  "name": "ZombieCoder Debug Adapter",
+  "request": "launch",
+  "command": {
+    "command": "node",
+    "args": [
+      "${workspace}/src/dap_proxy.js",
+      "--server-url",
+      "http://localhost:3005"
+    ]
+  },
+  "args": [],
+  "cwd": "${workspace}",
+  "environment": [],
+  "console": "internalConsole",
+  "stopOnEntry": false,
+  "internalConsoleOptions": "openOnSessionStart",
+  "program": "${file}",
+  "runtime": "node",
+  "runtimeArgs": [],
+  "serverReadyAction": {
+    "action": "debugWithChrome",
+    "pattern": "listening on (127.0.0.1:[0-9]+)",
+    "uriFormat": "http://%s"
+  },
+  "presentation": {
+    "hidden": false,
+    "group": "ZombieCoder",
+    "order": 1
+  },
+  "debuggerVariables": {
+    "zombie": true,
+    "host": "localhost",
+    "port": 3005
+  },
+  "breakpoints": {
+    "exception": {
+      "caught": "uncaught",
+      "uncaught": "raised"
+    }
+  }
+}

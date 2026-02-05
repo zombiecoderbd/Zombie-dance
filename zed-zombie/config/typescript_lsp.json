@@ -1,0 +1,64 @@
+{
+  "language_id": "typescript",
+  "name": "ZombieCoder TypeScript Language Server",
+  "command": {
+    "command": "node",
+    "args": [
+      "${workspace}/src/lsp_proxy.js",
+      "--server-url",
+      "http://localhost:3004"
+    ]
+  },
+  "initialization_options": {
+    "zombie": true,
+    "host": "localhost",
+    "port": 3004,
+    "rootPath": "${workspace}",
+    "settings": {
+      "typescript.validate.enable": true,
+      "typescript.format.enable": true,
+      "typescript.suggest.autoImports": true,
+      "typescript.suggest.completeFunctionCalls": true
+    }
+  },
+  "settings": {
+    "typescript.inlayHints.parameterNames.enabled": "all",
+    "typescript.inlayHints.parameterTypes.enabled": true,
+    "typescript.inlayHints.variableTypes.enabled": true,
+    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "typescript.inlayHints.enumMemberValues.enabled": true
+  },
+  "workspace_symbol": {
+    "search": {
+      "query": {
+        "pattern": "^[a-zA-Z_$][a-zA-Z0-9_$]*$"
+      }
+    }
+  },
+  "hover_provider": true,
+  "definition_provider": true,
+  "references_provider": true,
+  "document_highlight_provider": true,
+  "document_symbol_provider": true,
+  "workspace_symbol_provider": true,
+  "code_action_provider": true,
+  "completion_provider": {
+    "resolve_provider": true,
+    "trigger_characters": [
+      ".",
+      "\"",
+      "'",
+      "/",
+      "@",
+      "#",
+      "("
+    ]
+  },
+  "signature_help_provider": {
+    "trigger_characters": [
+      "(",
+      ","
+    ]
+  }
+}

@@ -1,0 +1,114 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+*.coverage
+.nyc_output
+
+# Production builds
+dist/
+build/
+out/
+.next/
+*.vsix
+
+# Environment variables and secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+*.secret
+
+# Database
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.AppleDouble
+.LSOverride
+
+# Editor directories
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json.example
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.vscode-test/
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+.cache/
+
+# Package manager locks (optional, comment out if you want to track them)
+# package-lock.json
+# pnpm-lock.yaml
+# yarn.lock
+
+# Build artifacts
+*.tsbuildinfo
+.turbo/
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+
+# Local development
+.qoder/
+.claude/
+.cursor/
+
+# VS Code extension specific
+extension/dist/
+extension/out/
+extension/*.vsix
+
+# Backend specific
+backend/dist/
+backend/logs/
+
+# Zed specific
+zed-zombie/node_modules/
+
+# Docker
+.dockerignore
+
+# Misc
+*.bak
+*.orig

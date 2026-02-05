@@ -1,0 +1,60 @@
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-shift-a": "assistant::ToggleFocus",
+      "ctrl-p": "file_finder::Toggle",
+      "ctrl-shift-p": "command_palette::Toggle",
+      "ctrl-shift-f": "pane::DeploySearch",
+      "ctrl-shift-e": "project_panel::ToggleFocus",
+      "ctrl-b": "workspace::ToggleLeftDock",
+      "ctrl-`": "terminal_panel::ToggleFocus",
+      "ctrl-shift-g": "git_panel::ToggleFocus",
+      "ctrl-\\": "pane::SplitRight",
+      "ctrl-w": "pane::CloseActiveItem",
+      "ctrl-shift-t": "pane::ReopenClosedItem",
+      "ctrl-tab": "pane::ActivateNextItem",
+      "ctrl-shift-tab": "pane::ActivatePrevItem",
+      "ctrl-=": "zed::IncreaseBufferFontSize",
+      "ctrl--": "zed::DecreaseBufferFontSize",
+      "ctrl-0": "zed::ResetBufferFontSize"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-enter": "assistant::InlineAssist",
+      "ctrl-.": "editor::ToggleCodeActions",
+      "f12": "editor::GoToDefinition",
+      "shift-f12": "editor::FindAllReferences",
+      "f2": "editor::Rename",
+      "ctrl-/": "editor::ToggleComments",
+      "ctrl-d": "editor::SelectNext",
+      "ctrl-shift-l": "editor::SelectAllMatches",
+      "alt-up": "editor::MoveLineUp",
+      "alt-down": "editor::MoveLineDown",
+      "ctrl-shift-k": "editor::DeleteLine",
+      "ctrl-shift-d": "editor::DuplicateLine",
+      "ctrl-shift-[": "editor::Fold",
+      "ctrl-shift-]": "editor::UnfoldLines",
+      "ctrl-]": "editor::Indent",
+      "ctrl-[": "editor::Outdent",
+      "ctrl-g": "go_to_line::Toggle",
+      "ctrl-shift-o": "outline::Toggle"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-shift-c": "terminal::Copy",
+      "ctrl-shift-v": "terminal::Paste",
+      "ctrl-l": "terminal::Clear"
+    }
+  },
+  {
+    "context": "AssistantPanel",
+    "bindings": {
+      "ctrl-enter": "assistant::Assist"
+    }
+  }
+]

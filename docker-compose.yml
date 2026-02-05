@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  zombiecoder-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: zombiecoder-backend
+    ports:
+      - "8001:8001"
+    environment:
+      - NODE_ENV=development
+      - PORT=8001
+      - API_KEY=${API_KEY:-dev-key-change-in-production}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LLM_MODEL=gpt-4
+      - LOG_LEVEL=info
+    volumes:
+      - ./backend/src:/app/src
+      - /app/node_modules
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/v1/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  # Optional: Ollama for local LLM
+  ollama:
+    image: ollama/ollama:latest
+    container_name: zombiecoder-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0:11434
+    restart: unless-stopped
+    profiles:
+      - with-ollama
+
+volumes:
+  ollama-data:

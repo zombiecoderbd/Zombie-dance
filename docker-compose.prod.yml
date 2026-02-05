@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  zombiecoder-backend:
+    image: zombiecoder/backend:latest
+    container_name: zombiecoder-backend-prod
+    ports:
+      - "8001:8001"
+    environment:
+      - NODE_ENV=production
+      - PORT=8001
+      - API_KEY=${API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LLM_MODEL=gpt-4-turbo
+      - LOG_LEVEL=warn
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/v1/health"]
+      interval: 60s
+      timeout: 5s
+      retries: 3
+    networks:
+      - zombiecoder-net
+
+networks:
+  zombiecoder-net:
+    driver: bridge

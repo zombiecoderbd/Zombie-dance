@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZombieCoder প্রজেক্ট নিরীক্ষা ও উন্নয়ন পরিকল্পনা</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+        }
+
+        .section h3 {
+            color: #34495e;
+            margin-bottom: 15px;
+            margin-top: 20px;
+            font-size: 1.4em;
+        }
+
+        .icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .status-card {
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+            background: #d5f4e6;
+        }
+
+        .status-card.warning {
+            border-left-color: #f39c12;
+            background: #fef9e7;
+        }
+
+        .status-card.error {
+            border-left-color: #e74c3c;
+            background: #fdedec;
+        }
+
+        .status-card h4 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .file-structure {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .file-structure .folder {
+            color: #f39c12;
+            font-weight: bold;
+        }
+
+        .file-structure .file {
+            color: #3498db;
+        }
+
+        .file-structure .config {
+            color: #e74c3c;
+        }
+
+        .endpoint-list {
+            background: #34495e;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .endpoint {
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(52, 73, 94, 0.3);
+            border-radius: 4px;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .method.get { background: #27ae60; }
+        .method.post { background: #3498db; }
+        .method.put { background: #f39c12; }
+        .method.delete { background: #e74c3c; }
+
+        .database-schema {
+            overflow-x: auto;
+        }
+
+        .table-info {
+            background: #ecf0f1;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .table-info h5 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .column {
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #bdc3c7;
+        }
+
+        .priority {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .priority.high { background: #e74c3c; }
+        .priority.medium { background: #f39c12; }
+        .priority.low { background: #27ae60; }
+
+        .action-buttons {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 10px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #5a67d8;
+        }
+
+        .btn.secondary {
+            background: #95a5a6;
+        }
+
+        .btn.secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            transition: width 0.3s ease;
+        }
+
+        .timestamp {
+            text-align: right;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .code-snippet {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🧟‍♂️ ZombieCoder প্রজেক্ট নিরীক্ষা ও উন্নয়ন পরিকল্পনা</h1>
+            <div class="subtitle">বিস্তারিত কোডবেস বিশ্লেষণ এবং কার্যক্রমিক উন্নয়ন রোডম্যাপ</div>
+        </header>
+
+        <!-- প্রজেক্ট স্থিতি সারসংক্ষেপ -->
+        <section class="section">
+            <h2><span class="icon">📊</span>প্রজেক্ট স্থিতি সারসংক্ষেপ</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 68%;"></div>
+            </div>
+            <p></p><strong>সম্পূর্ণতা:</strong> 68% | <strong>মূল স্থাপত্য:</strong> ✅ সম্পূর্ণ | <strong>ডেটাবেজ:</strong> ⚠️ আংশিক | <strong>VS Code API:</strong> ❌ অসম্পূর্ণ</p>
+
+            <div class="status-grid">
+                <div class="status-card">
+                    <h4>✅ সম্পন্ন কাজসমূহ</h4>
+                    <ul>
+                        <li>Next.js ফ্রন্টএন্ড সেটআপ</li>
+                        <li>Express.js ব্যাকএন্ড সার্ভার</li>
+                        <li>VS Code Extension কাঠামো</li>
+                        <li>Ollama ইন্টিগ্রেশন</li>
+                        <li>WebSocket সাপোর্ট</li>
+                    </ul>
+                </div>
+                <div class="status-card warning">
+                    <h4>⚠️ আংশিক বাস্তবায়ন</h4>
+                    <ul>
+                        <li>ডেটাবেজ স্কিমা (SQLite)</li>
+                        <li>অ্যাডমিন ড্যাশবোর্ড</li>
+                        <li>API এন্ডপয়েন্ট</li>
+                        <li>প্রমাণীকরণ সিস্টেম</li>
+                        <li>LLM সার্ভিস লেয়ার</li>
+                    </ul>
+                </div>
+                <div class="status-card error">
+                    <h4>❌ অসম্পূর্ণ/সমস্যাযুক্ত</h4>
+                    <ul>
+                        <li>VS Code API সংযোগ</li>
+                        <li>ডেটাবেজ মাইগ্রেশন</li>
+                        <li>পরিবেশ কনফিগারেশন</li>
+                        <li>প্রোডাকশন-রেডি কোড</li>
+                        <li>টেস্টিং ইনফ্রাস্ট্রাকচার</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ফাইল কাঠামো বিশ্লেষণ -->
+        <section class="section">
+            <h2><span class="icon">📁</span>প্রজেক্ট ফাইল কাঠামো বিশ্লেষণ</h2>
+            <div class="file-structure">
+zombiecoder/
+├── <span class="folder">app/</span>                    # Next.js অ্যাপ রাউটার
+├── <span class="folder">backend/</span>                # Express.js ব্যাকএন্ড সার্ভার
+│   ├── <span class="folder">src/</span>
+│   │   ├── <span class="folder">middleware/</span>     # প্রমাণীকরণ ও এরর হ্যান্ডলিং
+│   │   ├── <span class="folder">routes/</span>         # API রুট (chat.ts, websocket.ts)
+│   │   ├── <span class="folder">services/</span>       # LLM ও Diff সার্ভিস
+│   │   ├── <span class="folder">types/</span>          # TypeScript টাইপ ডেফিনিশন
+│   │   └── <span class="file">server.ts</span>         # মূল সার্ভার ফাইল
+│   └── <span class="config">package.json</span>        # ব্যাকএন্ড ডিপেন্ডেন্সি
+├── <span class="folder">extension/</span>              # VS Code Extension
+│   ├── <span class="folder">src/</span>               # Extension সোর্স কোড
+│   └── <span class="config">package.json</span>       # Extension কনফিগারেশন
+├── <span class="folder">docs/</span>                   # ডকুমেন্টেশন (14 ফাইল)
+├── <span class="folder">temp/</span>                   # টেম্পোরারি ওয়ার্কস্পেস
+└── <span class="config">package.json</span>           # মূল প্রজেক্ট কনফিগারেশন
+            </div>
+        </section>
+
+        <!-- Ollama মডেল স্থিতি -->
+        <section class="section">
+            <h2><span class="icon">🤖</span>Ollama মডেল স্থিতি ও কনফিগারেশন</h2>
+            <h3>বর্তমানে ইনস্টলকৃত মডেল:</h3>
+            <div class="code-snippet">
+$ ollama list
+NAME                           ID              SIZE      MODIFIED
+qwen2.5:0.5b                   a8b0c5157701    397 MB    18 hours ago
+gemini-3-pro-preview:latest    91a1db042ba1    -         4 days ago
+gpt-oss:120b-cloud             569662207105    -         4 days ago
+glm-4.6:cloud                  05277b76269f    -         4 days ago
+glm-4.7:cloud                  023608864819    -         4 days ago
+nomic-embed-text:latest        0a109f422b47    274 MB    5 days ago
+qwen2.5:1.5b                   65ec06548149    986 MB    6 days ago
+            </div>
+
+            <div class="status-grid">
+                <div class="status-card">
+                    <h4>✅ কার্যকর মডেল</h4>
+                    <ul>
+                        <li><strong>qwen2.5:0.5b</strong> - দ্রুত রেসপন্স</li>
+                        <li><strong>qwen2.5:1.5b</strong> - ভাল কোড জেনারেশন</li>
+                        <li><strong>nomic-embed-text</strong> - এম্বেডিং সার্ভিস</li>
+                    </ul>
+                </div>
+                <div class="status-card warning">
+                    <h4>⚠️ ক্লাউড মডেল</h4>
+                    <ul>
+                        <li>gemini-3-pro-preview - API কী প্রয়োজন</li>
+                        <li>gpt-oss:120b-cloud - অনলাইন সংযোগ প্রয়োজন</li>
+                        <li>glm-4.6/4.7:cloud - চাইনিজ মডেল</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ডেটাবেজ স্কিমা পরিকল্পনা -->
+        <section class="section">
+            <h2><span class="icon">🗄️</span>ডেটাবেজ স্কিমা ও মাইগ্রেশন পরিকল্পনা</h2>
+            <h3>প্রয়োজনীয় টেবিল স্ট্রাকচার:</h3>
+
+            <div class="database-schema">
+                <div class="table-info">
+                    <h5>users টেবিল</h5>
+                    <div class="columns">
+                        <div class="column">id (INTEGER PRIMARY KEY)</div>
+                        <div class="column">username (VARCHAR(50))</div>
+                        <div class="column">email (VARCHAR(100))</div>
+                        <div class="column">password_hash (VARCHAR(255))</div>
+                        <div class="column">role (ENUM: admin, user)</div>
+                        <div class="column">created_at (TIMESTAMP)</div>
+                        <div class="column">last_login (TIMESTAMP)</div>
+                    </div>
+                </div>
+
+                <div class="table-info">
+                    <h5>models টেবিল</h5>
+                    <div class="columns">
+                        <div class="column">id (INTEGER PRIMARY KEY)</div>
+                        <div class="column">name (VARCHAR(100))</div>
+                        <div class="column">provider (VARCHAR(50))</div>
+                        <div class="column">endpoint (TEXT)</div>
+                        <div class="column">api_key_encrypted (TEXT)</div>
+                        <div class="column">is_active (BOOLEAN)</div>
+                        <div class="column">config (JSON)</div>
+                        <div class="column">created_at (TIMESTAMP)</div>
+                    </div>
+                </div>
+
+                <div class="table-info">
+                    <h5>chat_sessions টেবিল</h5>
+                    <div class="columns">
+                        <div class="column">id (INTEGER PRIMARY KEY)</div>
+                        <div class="column">user_id (INTEGER)</div>
+                        <div class="column">title (VARCHAR(200))</div>
+                        <div class="column">model_id (INTEGER)</div>
+                        <div class="column">created_at (TIMESTAMP)</div>
+                        <div class="column">last_activity (TIMESTAMP)</div>
+                    </div>
+                </div>
+
+                <div class="table-info">
+                    <h5>chat_messages টেবিল</h5>
+                    <div class="columns">
+                        <div class="column">id (INTEGER PRIMARY KEY)</div>
+                        <div class="column">session_id (INTEGER)</div>
+                        <div class="column">role (ENUM: user, assistant)</div>
+                        <div class="column">content (TEXT)</div>
+                        <div class="column">metadata (JSON)</div>
+                        <div class="column">created_at (TIMESTAMP)</div>
+                    </div>
+                </div>
+
+                <div class="table-info">
+                    <h5>activity_log টেবিল</h5>
+                    <div class="columns">
+                        <div class="column">id (INTEGER PRIMARY KEY)</div>
+                        <div class="column">user_id (INTEGER)</div>
+                        <div class="column">action (VARCHAR(100))</div>
+                        <div class="column">resource (VARCHAR(100))</div>
+                        <div class="column">details (JSON)</div>
+                        <div class="column">ip_address (VARCHAR(45))</div>
+                        <div class="column">user_agent (TEXT)</div>
+                        <div class="column">created_at (TIMESTAMP)</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>ডেটাবেজ কনফিগারেশন:</h3>
+            <div class="code-snippet">
+// .env ফাইল
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=zombi
+DB_USER=root
+DB_PASSWORD=105585
+
+// SQLite অ্যালটারনেটিভ (লোকাল ডেভেলপমেন্ট)
+DATABASE_URL=sqlite:./zombi.db
+            </div>
+        </section>
+
+        <!-- API এন্ডপয়েন্ট তালিকা -->
+        <section class="section">
+            <h2><span class="icon">🔌</span>API এন্ডপয়েন্ট ম্যাপিং</h2>
+
+            <div class="endpoint-list">
+                <h3>বর্তমানে বাস্তবায়িত:</h3>
+                <div class="endpoint">
+                    <span class="method get">GET</span> /v1/health - সার্ভার স্বাস্থ্য পরীক্ষা
+                </div>
+                <div class="endpoint">
+                    <span class="method post">POST</span> /v1/chat - সাধারণ চ্যাট API
+                </div>
+                <div class="endpoint">
+                    <span class="method post">POST</span> /v1/chat/stream - স্ট্রিমিং চ্যাট API
+                </div>
+                <div class="endpoint">
+                    <span class="method get">WS</span> /v1/chat/ws - WebSocket চ্যাট
+                </div>
+
+                <h3 style="margin-top: 20px;">প্রয়োজনীয় নতুন এন্ডপয়েন্ট:</h3>
+                <div class="endpoint">
+                    <span class="method get">GET</span> /v1/runtime_status - রানটাইম স্থিতি
+                </div>
+                <div class="endpoint">
+                    <span class="method get">GET</span> /v1/runtime_agent - এজেন্ট তথ্য
+                </div>
+                <div class="endpoint">
+                    <span class="method get">GET</span> /api/admin/dashboard - অ্যাডমিন ড্যাশবোর্ড ডেটা
+                </div>
+                <div class="endpoint">
+                    <span class="method get">GET</span> /api/admin/metrics - সিস্টেম মেট্রিক্স
+                </div>
+                <div class="endpoint">
+                    <span class="method get">GET</span> /api/admin/users - ব্যবহারকারী তালিকা
+                </div>
+                <div class="endpoint">
+                    <span class="method post">POST</span> /api/admin/users - নতুন ব্যবহারকারী
+                </div>
+                <div class="endpoint">
+                    <span class="method get">GET</span> /api/models - মডেল তালিকা
+                </div>
+                <div class="endpoint">
+                    <span class="method post">POST</span> /api/models - নতুন মডেল যোগ
+                </div>
+                <div class="endpoint">
+                    <span class="method put">PUT</span> /api/models/:id - মডেল আপডেট
+                </div>
+                <div class="endpoint">
+                    <span class="method delete">DELETE</span> /api/models/:id - মডেল মুছে ফেলা
+                </div>
+            </div>
+        </section>
+
+        <!-- প্রাথমিকতা ভিত্তিক কাজের তালিকা -->
+        <section class="section">
+            <h2><span class="icon">⚡</span>প্রাথমিকতা ভিত্তিক কাজের তালিকা</h2>
+
+            <h3><span class="priority high">উচ্চ অগ্রাধিকার</span></h3>
+            <ol>
+                <li><strong>ডেটাবেজ মাইগ্রেশন স্ক্রিপ্ট তৈরি</strong> - SQLite/MySQL স্কিমা সেটআপ</li>
+                <li><strong>পরিবেশ ভেরিয়েবল কনফিগারেশন</strong> - .env ফাইল সেটআপ ও ভ্যালিডেশন</li>
+                <li><strong>VS Code API এন্ডপয়েন্ট বাস্তবায়ন</strong> - সঠিক হেডার ও সেশন হ্যান্ডলিং</li>
+                <li><strong>অ্যাডমিন UI কার্যকরকরণ</strong> - রিয়েল ডেটা ইন্টিগ্রেশন</li>
+            </ol>
+
+            <h3><span class="priority medium">মধ্যম অগ্রাধিকার</span></h3>
+            <ol>
+                <li><strong>প্রমাণীকরণ সিস্টেম সম্পূর্ণকরণ</strong> - JWT টোকেন ও ব্যবহারকারী ব্যবস্থাপনা</li>
+                <li><strong>এরর হ্যান্ডলিং ও লগিং উন্নত করা</strong> - বিস্তারিত এরর ট্র্যাকিং</li>
+                <li><strong>API রেট লিমিটিং</strong> - অপব্যবহার রোধ</li>
+                <li><strong>মডেল কনফিগারেশন UI</strong> - অ্যাডমিন প্যানেলে মডেল ব্যবস্থাপনা</li>
+            </ol>্পূর্ণ টেস্ট কভারেজ</li>
+                <li><strong>পারফর্মেন্স অপটিমাইজেশন</strong> - ক্যাশিং ও লোড ব্যালান্সিং</li>
+                <li><strong>ডকুমেন্টেশন আপডেট</strong> - API ডক্স ও ইনস্টলেশন গাইড</li>
+                <li><strong>ডকার কনটেইনার অপটিমাইজেশন</strong> - প্রোডাকশন-রেডি কনফিগারেশন</li>
+            </ol>
+        </section>
+
+        <!-- VS Code API সমস্যা বিশ্লেষণ -->
+        <section class="section">
+            <h2><span class="icon">🔧</span>VS Code API সংযোগ সমস্যা বিশ্লেষণ</h2>
+
+            <h3>চিহ্নিত সমস্যাসমূহ:</h3>
+            <ul>
+                <li><strong>হেডার হ্যান্ডলিং:</strong> VS Code থেকে আসা হেডার সঠিকভাবে পার্স হচ্ছে না</li>
+                <li><strong>সেশন ম্যানেজমেন্ট:</strong> Extension ও ব্যাকএন্ড এর মধ্যে সেশন সিঙ্ক নেই</li>
+                <li><strong>CORS কনফিগারেশন:</strong> Extension থেকে API কল ব্লক হচ্ছে</li>
+                <li><strong>প্রমাণীকরণ:</strong> Extension এর জন্য আলাদা Auth ফ্লো প্রয়োজন</li>
+            </ul>
+
+            <h3>প্রস্তাবিত সমাধান:</h3>
+            <div class="code-snippet">
+// backend/src/middleware/vscode-auth.ts
+export const vscodeAuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  const userAgent = req.headers['user-agent'];
+  const vscodeSession = req.headers['vscode-session-id'];
+
+  if (userAgent && userAgent.includes('vscode')) {
+    // VS Code specific handling
+    req.context = {
+      source: 'vscode',
+      sessionId: vscodeSession,
+      workspaceRoot: req.headers['workspace-root']
+    };
+  }
+
+  next();
+};
+
+// Extension থেকে API কল
+const response = await fetch(`${endpoint}/v1/chat/stream`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'User-Agent': 'vscode-extension',
+    'vscode-session-id': vscode.env.sessionId,
+    'workspace-root': vscode.workspace.rootPath
+  },
+  body: JSON.stringify({ prompt, context })
+});
+            </div>
+        </section>
+
+        <!-- টেস্টিং ও ভ্যালিডেশন পরিকল্পনা -->
+        <section class="section">
+            <h2><span class="icon">🧪</span>টেস্টিং ও ভ্যালিডেশন পরিকল্পনা</h2>
+
+            <h3>প্রয়োজনীয় টেস্ট স্ক্রিপ্ট:</h3>
+            <div class="status-grid">
+                <div class="status-card">
+                    <h4>ব্যাকএন্ড ট

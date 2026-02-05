@@ -1,0 +1,102 @@
+{
+  "assistant": {
+    "version": "2",
+    "enabled": true,
+    "default_model": {
+      "provider": "ollama",
+      "model": "qwen2.5:1.5b"
+    }
+  },
+  "language_models": {
+    "ollama": {
+      "api_url": "http://127.0.0.1:11434",
+      "low_speed_timeout_in_seconds": 300,
+      "available_models": [
+        {
+          "name": "qwen2.5:1.5b",
+          "display_name": "Qwen 2.5 1.5B (Recommended)",
+          "max_tokens": 32768,
+          "keep_alive": "30m"
+        },
+        {
+          "name": "qwen2.5:0.5b",
+          "display_name": "Qwen 2.5 0.5B (Ultra Fast)",
+          "max_tokens": 32768,
+          "keep_alive": "30m"
+        }
+      ]
+    }
+  },
+  "inline_completions": {
+    "disabled_globs": [".env", ".env.*", "*.pem", "*.key", "*.secret"]
+  },
+  "features": {
+    "inline_completion_provider": "none"
+  },
+  "lsp": {
+    "rust-analyzer": {
+      "initialization_options": {
+        "checkOnSave": {
+          "command": "clippy"
+        }
+      }
+    },
+    "pyright": {
+      "settings": {
+        "python.analysis": {
+          "typeCheckingMode": "basic",
+          "autoImportCompletions": true
+        }
+      }
+    }
+  },
+  "theme": "One Dark",
+  "ui_font_size": 16,
+  "buffer_font_size": 14,
+  "buffer_font_family": "JetBrains Mono",
+  "tab_size": 2,
+  "hard_tabs": false,
+  "soft_wrap": "editor_width",
+  "format_on_save": "on",
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
+    }
+  },
+  "remove_trailing_whitespace_on_save": true,
+  "ensure_final_newline_on_save": true,
+  "terminal": {
+    "shell": {
+      "program": "/bin/bash"
+    },
+    "font_size": 14,
+    "copy_on_select": true,
+    "working_directory": "current_project_directory"
+  },
+  "project_panel": {
+    "dock": "left",
+    "git_status": true,
+    "default_width": 280,
+    "auto_fold_dirs": true,
+    "folder_icons": true,
+    "file_icons": true
+  },
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.venv",
+    "**/venv",
+    "**/target",
+    "**/build",
+    "**/dist",
+    "**/.next",
+    "**/coverage",
+    "**/.cache"
+  ],
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  }
+}
