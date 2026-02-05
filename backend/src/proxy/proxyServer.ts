@@ -152,11 +152,12 @@ proxyApp.get("/proxy/qoder-config", (req: Request, res: Response) => {
     });
 });
 
-// Simple proxy middleware
+// Simple proxy middleware - Only proxy specific AI endpoints
 const simpleProxy = createProxyMiddleware({
     target: BACKEND_URL,
     changeOrigin: true,
     ws: true,
+    pathFilter: ["/v1/**", "/api/**", "/proxy/**"], // Only proxy AI-related paths
     on: {
         proxyReq: (proxyReq: any, req: any) => {
             proxyReq.setHeader("X-Forwarded-For", req.socket.remoteAddress || "");
@@ -189,12 +190,21 @@ const simpleProxy = createProxyMiddleware({
     },
 });
 
-// Apply proxy to all routes except /proxy/*
+// Apply proxy to AI endpoints only
 proxyApp.use((req: Request, res: Response, next: NextFunction) => {
-    if (req.path.startsWith("/proxy/")) {
-        return next();
+    // Bypass proxy for non-AI paths
+    if (req.path.startsWith("/proxy/") || 
+        req.path.startsWith("/v1/") || 
+        req.path.startsWith("/api/")) {
+        return simpleProxy(req, res, next);
     }
-    simpleProxy(req, res, next);
+    
+    // For all other paths, return 404 or redirect
+    res.status(404).json({
+        error: "Not Found",
+        message: "This proxy only handles AI API requests",
+        allowedPaths: ["/v1/*", "/api/*", "/proxy/*"]
+    });
 });
 
 // Start server
